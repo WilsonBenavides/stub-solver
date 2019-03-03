@@ -1,5 +1,10 @@
 package com.willy.smith.main;
 
+import static com.willy.smith.util.UtilConstant.HEIGHT;
+import static com.willy.smith.util.UtilConstant.SCALE;
+import static com.willy.smith.util.UtilConstant.WIDTH;
+import static com.willy.smith.util.UtilConstant.TITLE;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,10 +14,6 @@ import javafx.stage.Stage;
 
 public class StubSolverMain extends Application {
 
-	private static final double WIDTH = 100.0;
-	private static final double HEIGHT = WIDTH * 0.618;
-	private static final double SCALE = 10.0;
-
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -20,7 +21,7 @@ public class StubSolverMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		StackPane root = new StackPane();
 		primaryStage.setScene(createScene(root, WIDTH * SCALE, HEIGHT * SCALE));
-		primaryStage.setTitle("Stub Solver");
+		primaryStage.setTitle(TITLE);
 		primaryStage.show();
 	}
 
@@ -28,6 +29,7 @@ public class StubSolverMain extends Application {
 		Scene scene = new Scene(root, width, height);
 		Button btn = new Button("AnimateFX");
 		btn.setId("button");
+		btn.setOnAction(actionEvent -> btn.setText("click"));
 		root.getChildren().add(btn);
 		return scene;
 	}

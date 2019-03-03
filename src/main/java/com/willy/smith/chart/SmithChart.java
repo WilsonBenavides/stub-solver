@@ -1,5 +1,7 @@
 package com.willy.smith.chart;
 
+import static com.willy.smith.util.UtilConstant.DIVISION_BY_ZERO;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +19,7 @@ public class SmithChart {
 		Map<String, Double> result = new HashMap<String, Double>();
 
 		if (rl == -1.0)
-			throw new SmithChartException("/ by Zero");
+			throw new SmithChartException(DIVISION_BY_ZERO);
 
 		double xc = rl / (1 + rl); // x-center
 		double yc = 0; // y-center

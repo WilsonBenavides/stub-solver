@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
@@ -19,57 +20,64 @@ import org.junit.runners.Parameterized.Parameters;
 import com.willy.smith.chart.SmithChart;
 import com.willy.smith.exception.SmithChartException;
 
-@RunWith(Parameterized.class)
+@RunWith(Enclosed.class)
 public class SmithChartTest {
 
-	private SmithChart smithChart;
+	@RunWith(Parameterized.class)
+	public static class CalculateResParamTest {
 
-	@Parameter(0)
-	public Double rl;
-	@Parameter(1)
-	public Double xc;
-	@Parameter(2)
-	public Double yc;
-	@Parameter(3)
-	public Double radius;
+		private static SmithChart smithChart;
 
-	// creates the test data
-	@Parameters
-	public static Collection<Object[]> data() {
-		Object[][] data = new Object[][] { { 0.1, 0.0909090909, 0.0, 0.9090909090 },
-				{ 0.2, 0.1666666667, 0.0, 0.8333333334 }, { 0.3, 0.2307692308, 0.0, 0.7692307692 },
-				{ 0.4, 0.2857142857, 0.0, 0.7142857143 }, { 0.5, 0.3333333334, 0.0, 0.6666666667 },
-				{ 0.6, 0.375, 0.0, 0.625 }, { 0.7, 0.4117647059, 0.0, 0.5882352941 },
-				{ 0.8, 0.4444444444, 0.0, 0.5555555556 }, { 0.9, 0.4736842105, 0.0, 0.5263157895 } };
-		return Arrays.asList(data);
+		@Parameter(0)
+		public Double rl;
+		@Parameter(1)
+		public Double xc;
+		@Parameter(2)
+		public Double yc;
+		@Parameter(3)
+		public Double radius;
+
+		@Before
+		public void initObjects() {
+			smithChart = new SmithChart();
+		}
+
+		// creates the test data
+		@Parameters
+		public static Collection<Object[]> data() {
+			Object[][] data = new Object[][] { { 0.1, 0.0909090909, 0.0, 0.9090909090 },
+					{ 0.2, 0.1666666667, 0.0, 0.8333333334 }, { 0.3, 0.2307692308, 0.0, 0.7692307692 },
+					{ 0.4, 0.2857142857, 0.0, 0.7142857143 }, { 0.5, 0.3333333334, 0.0, 0.6666666667 },
+					{ 0.6, 0.375, 0.0, 0.625 }, { 0.7, 0.4117647059, 0.0, 0.5882352941 },
+					{ 0.8, 0.4444444444, 0.0, 0.5555555556 }, { 0.9, 0.4736842105, 0.0, 0.5263157895 } };
+			return Arrays.asList(data);
+		}
+
+		@Test
+		public void testCalculateResCircle() throws SmithChartException {
+
+			Map<String, Double> map = smithChart.calculateResCircle(rl);
+			double delta = 0.0000000001;
+
+			assertThat(map.get("x-center"), is(closeTo(xc, delta)));
+			assertThat(map.get("y-center"), equalTo(yc));
+			assertThat(map.get("radius"), is(closeTo(radius, delta)));
+		}
 	}
 
-	@Before
-	public void initObjects() {
-		smithChart = new SmithChart();
+	public static class NotParametrizedTest {
+
+		private static SmithChart smithChart;
+
+		@Before
+		public void initObjects() {
+			smithChart = new SmithChart();
+		}
+
+		@Test(expected = SmithChartException.class)
+		public void testCalculateResCircleExp() throws SmithChartException {
+
+			System.out.println("Divided by zero " + smithChart.calculateResCircle(-1).get("x-center"));
+		}
 	}
-
-	@Test(expected = SmithChartException.class)
-	public void testCalculateResCircleExp() throws SmithChartException {
-
-		Map<String, Double> map = smithChart.calculateResCircle(-1);
-		System.out.println("Resistence: " + map.get("x-center"));
-//		System.out.println("zero exception: " + map.get("x-center"));
-//		throw new ArithmeticException();
-//			System.out.println("zero exception: " + e.getMessage());
-//			assertThat(e.getMessage(), is("/ by Zero"));
-	}
-
-	@Test
-	public void testCalculateResCircle() throws SmithChartException {
-
-		Map<String, Double> map = smithChart.calculateResCircle(rl);
-		double delta = 0.0000000001;
-
-		assertThat(map.get("x-center"), is(closeTo(xc, delta)));
-		assertThat(map.get("y-center"), is(equalTo(yc)));
-		assertThat(map.get("radius"), is(closeTo(radius, delta)));
-
-	}
-
 }

@@ -1,24 +1,24 @@
 package com.willy.smith.test;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
+import static org.testfx.api.FxAssert.verifyThat;
+import static org.testfx.api.FxToolkit.registerPrimaryStage;
+import static org.testfx.api.FxToolkit.setupApplication;
+import static org.testfx.matcher.control.LabeledMatchers.hasText;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.testfx.api.FxToolkit;
 import org.testfx.framework.junit.ApplicationTest;
 
 import com.willy.smith.main.StubSolverMain;
 
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class SmithChartGUITest extends ApplicationTest {
 
 	@Before
     public void before() throws Exception {
-        FxToolkit.registerPrimaryStage();
-        FxToolkit.setupApplication(StubSolverMain.class);
+        registerPrimaryStage();
+        setupApplication(StubSolverMain.class);
     }
 
 	@Override
@@ -29,8 +29,14 @@ public class SmithChartGUITest extends ApplicationTest {
 
 	@Test
 	public void hasTextButton() {
-		Button button = lookup("#button").query();
-		assertThat("AnimateFX", equalTo(button.getText()));
+//		Button button = lookup("#button").query();
+		verifyThat("#button", hasText("AnimateFX"));
 	}
-
+	
+	@Test
+	public void hasClickButton() {
+		clickOn("#button");
+		verifyThat("#button", hasText("click"));
+	}
+	
 }
