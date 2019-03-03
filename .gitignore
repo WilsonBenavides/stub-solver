@@ -7,8 +7,8 @@
 *.class
 
 #Classpath
-.classpath
-.gitignore
+*.classpath
+*.gitignore
 
 #target
 target/
