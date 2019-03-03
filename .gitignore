@@ -6,6 +6,10 @@
 # Compiled class file
 *.class
 
+#Classpath
+.classpath
+.gitignore
+
 #target
 target/
 
