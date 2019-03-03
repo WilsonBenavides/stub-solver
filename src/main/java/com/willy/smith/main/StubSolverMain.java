@@ -2,6 +2,7 @@ package com.willy.smith.main;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -25,7 +26,9 @@ public class StubSolverMain extends Application {
 
 	private Scene createScene(Pane root, double width, double height) {
 		Scene scene = new Scene(root, width, height);
+		Button btn = new Button("AnimateFX");
+		btn.setId("button");
+		root.getChildren().add(btn);
 		return scene;
 	}
-
 }
