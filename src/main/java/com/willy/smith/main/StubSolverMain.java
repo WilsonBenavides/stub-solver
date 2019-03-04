@@ -24,6 +24,7 @@ public class StubSolverMain extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 //		System.out.println("width: " + screenBounds.getWidth() + " height: " + screenBounds.getHeight());
+		System.out.println("HOla mundo de Prueba...");
 
 		this.smith = new SmithChart(screenBounds);
 
