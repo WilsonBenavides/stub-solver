@@ -1,5 +1,6 @@
 package com.willy.smith.test;
 
+import static com.willy.smith.logic.SmithChartFunctions.calculateResCircle;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.equalTo;
@@ -17,16 +18,14 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameter;
 import org.junit.runners.Parameterized.Parameters;
 
-import com.willy.smith.chart.SmithChart;
 import com.willy.smith.exception.SmithChartException;
+
 
 @RunWith(Enclosed.class)
 public class SmithChartTest {
 
 	@RunWith(Parameterized.class)
 	public static class CalculateResParamTest {
-
-		private static SmithChart smithChart;
 
 		@Parameter(0)
 		public Double rl;
@@ -38,8 +37,9 @@ public class SmithChartTest {
 		public Double radius;
 
 		@Before
-		public void initObjects() {
-			smithChart = new SmithChart();
+		public void initObjects() throws SmithChartException {
+//			Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+//			smithChart = new SmithChart(screenBounds);
 		}
 
 		// creates the test data
@@ -54,9 +54,9 @@ public class SmithChartTest {
 		}
 
 		@Test
-		public void testCalculateResCircle() throws SmithChartException {
+		public void testCalculateResCircle() {
 
-			Map<String, Double> map = smithChart.calculateResCircle(rl);
+			Map<String, Double> map = calculateResCircle(rl);
 			double delta = 0.0000000001;
 
 			assertThat(map.get("x-center"), is(closeTo(xc, delta)));
@@ -67,17 +67,14 @@ public class SmithChartTest {
 
 	public static class NotParametrizedTest {
 
-		private static SmithChart smithChart;
-
 		@Before
 		public void initObjects() {
-			smithChart = new SmithChart();
 		}
 
 		@Test(expected = SmithChartException.class)
-		public void testCalculateResCircleExp() throws SmithChartException {
+		public void testCalculateResCircleExp() {
 
-			System.out.println("Divided by zero " + smithChart.calculateResCircle(-1).get("x-center"));
+			System.out.println("Divided by zero " + calculateResCircle(-1).get("x-center"));
 		}
 	}
 }
