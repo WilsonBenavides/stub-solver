@@ -28,8 +28,8 @@ public class StubSolverMain extends Application {
 		this.smith = new SmithChart(screenBounds);
 
 		StackPane root = new StackPane();
-		Double wdt = screenBounds.getWidth() * SCREEN_SCALE;
-		Double hgt = screenBounds.getHeight() * SCREEN_SCALE;
+		double wdt = screenBounds.getWidth() * SCREEN_SCALE;
+		double hgt = screenBounds.getHeight() * SCREEN_SCALE;
 		primaryStage.setScene(createScene(root, wdt, hgt));
 		primaryStage.setTitle(TITLE);
 		primaryStage.show();
@@ -41,4 +41,5 @@ public class StubSolverMain extends Application {
 		root.getChildren().addAll(this.smith);
 		return scene;
 	}
+	
 }
