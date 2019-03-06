@@ -43,7 +43,7 @@ public class SmithChartFunctions {
 
 		double xc = 1.0;
 		double yc = 1.0 / xl;
-		double radius = 1.0 / xl;
+		double radius = Math.abs(1.0 / xl);
 		result.put("x-center", xc);
 		result.put("y-center", yc);
 		result.put("radius", radius);
